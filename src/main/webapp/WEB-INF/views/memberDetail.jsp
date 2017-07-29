@@ -35,38 +35,54 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-<form:form method="post" modelAttribute="memberUser" action="${pageContext.request.contextPath}/accessCondition">
+<form method="post"  action="${pageContext.request.contextPath}/accessCondition">
 	<table>
 		<tr>
 			<th colspan="2">Add MemberUser</th>
 		</tr>
 		<tr>
-			<form:hidden path="email" />
-			<td><form:label path="gender">gender:</form:label></td>
-			<td><form:input path="gender"></form:input></td>
+			<input type="hidden" name="email" />
+			<td><label path="gender">gender:</label></td>
+			<select name="gender">
+				<option selected="selected" value="" label="--select gender--">--select gender--</option>
+				<option value="female" label="female">female</option>
+				<option value="male" label="male">male</option>
+			</select>
 		</tr>
-	<!--	<tr>
-			<td><form:label path="name">name:</form:label></td>
-			<td><form:input path="name"></form:input></td>
-		</tr>-->
+
+
 		<tr>
-			<td><form:label path="locale">locale:</form:label></td>
-			<td><form:input path="locale"></form:input></td>
+			<td><label path="locale">locale:</label></td>
+			<select name="locale">
+				<option selected="selected" value="" label="--select locale--">--select locale--</option>
+				<option value="zh_TW" label="zh_TW">zh_TW</option>
+				<option value="zh_CN" label="zh_CN">zh_CN</option>
+				<option value="en_US" label="en_US">en_US</option>
+				<option value="fr_FR" label="fr_FR">fr_FR</option>
+				<option value="it_IT" label="it_IT">it_IT</option>
+				<option value="ja_JP" label="ja_JP">ja_JP</option>
+				<option value="ko_KR" label="ko_KR">ko_KR</option>
+			</select>
 		</tr>
-	<!--	<tr>
-			<td><form:label path="email">email:</form:label></td>
-			<td><form:input path="email"></form:input></td>
-		</tr>-->
+
 			<tr>
-			<td><form:label path="ageRange">ageRange:</form:label></td>
-			<td><form:input path="ageRange"></form:input></td>
+			<td><label path="ageRange">ageRange:</label></td>
+				<select name="ageRange">
+					<option selected="selected" value="" label="--select ageRange--">--select ageRange--</option>
+					<option value="11" label="11 to 20">11 to 20</option>
+					<option value="21" label="21 to 30">21 to 30</option>
+					<option value="31" label="31 to 40">31 to 40</option>
+					<option value="41" label="41 to 50">41 to 50</option>
+					<option value="51" label="51 to 60">51 to 60</option>
+					<option value="61" label="61 to 70">61 to 70</option>
+				</select>
 		</tr>
 		<tr>
 			<td colspan="2"><input type="submit"
 								   class="blue-button" /></td>
 		</tr>
 	</table>
-</form:form>
+</form>
 </br>
 </body>
 </html>
