@@ -231,7 +231,7 @@ public class FacebookCallbackController {
             memberConditionExist.setLat(new Double("25.0418"));
         }
 
-        return "redirect:https://angelhack-449d1.firebaseapp.com/index.html?memberCondition="+memberConditionExist.getId()+"&lon="+memberConditionExist.getLon()+"&lat="+memberConditionExist.getLat();
+        return "redirect:https://angelhack-449d1.firebaseapp.com/index.html?memberCondition="+memberConditionExist.getId()+"&lon="+memberConditionExist.getLon()+"&lat="+memberConditionExist.getLat()+"&email="+memberUser.getEmail();
     }
 
 
@@ -296,6 +296,7 @@ public class FacebookCallbackController {
            objectMapper.setDateFormat(df);
            String memberMessagesStr = null;
            memberMessagesStr = objectMapper.writeValueAsString(memberUserList);
+           System.out.println(memberMessagesStr);
            return memberMessagesStr;
        }catch (Exception e){
            e.printStackTrace();
