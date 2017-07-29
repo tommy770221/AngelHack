@@ -3,6 +3,8 @@ package com.angelhack.mapteam.controller;
 
 import com.angelhack.mapteam.model.Country;
 import com.angelhack.mapteam.model.MemberMessage;
+import com.angelhack.mapteam.model.MemberMessageAll;
+import com.angelhack.mapteam.repository.MemberMessageAllRepository;
 import com.angelhack.mapteam.repository.MemberMessageRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -12,6 +14,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -20,6 +24,9 @@ public class MessageController {
 
     @Autowired
     MemberMessageRepository memberMessageRepository;
+
+    @Autowired
+    MemberMessageAllRepository memberMessageAllRepository;
 
 
     @CrossOrigin(value = "*")
@@ -31,6 +38,8 @@ public class MessageController {
                               HttpServletResponse response) {
         List<MemberMessage> memberMessageList=memberMessageRepository.searchByEmailAndDate(toEmail,fromEmail);
         ObjectMapper objectMapper=new ObjectMapper();
+        DateFormat df=new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        objectMapper.setDateFormat(df);
         String  memberMessagesStr=null;
         try {
           memberMessagesStr= objectMapper.writeValueAsString(memberMessageList);
@@ -44,6 +53,55 @@ public class MessageController {
     }
 
     @CrossOrigin(value = "*")
+    @RequestMapping(value = "/getAllMessages", method = {RequestMethod.POST,RequestMethod.GET},produces = "application/json")
+    @ResponseBody
+    public String getAllMessages(Model model,
+                              @RequestParam(value = "fromEmail")String fromEmail,
+                              HttpServletResponse response) {
+        List<MemberMessageAll> memberMessageList=memberMessageAllRepository.searchByEmail(fromEmail);
+        ObjectMapper objectMapper=new ObjectMapper();
+        DateFormat df=new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        objectMapper.setDateFormat(df);
+        String  memberMessagesStr=null;
+        try {
+            memberMessagesStr= objectMapper.writeValueAsString(memberMessageList);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            response.setStatus(500);
+            return "\"status\":\"error\"";
+        }
+
+        return memberMessagesStr;
+    }
+
+    @CrossOrigin(value = "*")
+    @RequestMapping(value = "/addAllMessages", method = {RequestMethod.POST,RequestMethod.GET},produces = "application/json")
+    @ResponseBody
+    public String addAllMessages(Model model,
+                              @RequestParam(value = "fromEmail")String fromEmail,
+                              @RequestParam(value = "message")String message,
+                              @RequestParam(value = "lon")Double lon,
+                              @RequestParam(value = "lat")Double lat,
+                              HttpServletResponse response) {
+        try {
+            MemberMessageAll memberMessage=new MemberMessageAll();
+            memberMessage.setCreateDate(new Date());
+            memberMessage.setFromEmail(fromEmail);
+            memberMessage.setMessage(message);
+            memberMessage.setGetRead(Boolean.FALSE);
+            memberMessage.setLon(lon);
+            memberMessage.setLat(lat);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.setStatus(500);
+            return "\"status\":\"error\"";
+        }
+
+        return "\"status\":\"ok\"";
+    }
+
+    @CrossOrigin(value = "*")
     @RequestMapping(value = "/addSingleMessages", method = {RequestMethod.POST,RequestMethod.GET},produces = "application/json")
     @ResponseBody
     public String addMessages(Model model,
@@ -53,20 +111,17 @@ public class MessageController {
                               @RequestParam(value = "lon")Double lon,
                               @RequestParam(value = "lat")Double lat,
                               HttpServletResponse response) {
+        try {
         MemberMessage memberMessage=new MemberMessage();
         memberMessage.setCreateDate(new Date());
         memberMessage.setFromEmail(fromEmail);
         memberMessage.setToEmail(toEmail);
+        memberMessage.setMessage(message);
         memberMessage.setGetRead(Boolean.FALSE);
         memberMessage.setLon(lon);
         memberMessage.setLat(lat);
-        try {
-        memberMessage=memberMessageRepository.save(memberMessage);
-        ObjectMapper objectMapper=new ObjectMapper();
-        String  memberMessagesStr=null;
 
-            memberMessagesStr= objectMapper.writeValueAsString(memberMessage);
-        } catch (JsonProcessingException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             response.setStatus(500);
             return "\"status\":\"error\"";

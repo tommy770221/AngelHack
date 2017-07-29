@@ -11,6 +11,7 @@ import com.angelhack.mapteam.specification.MemberUserSpecification;
 import com.angelhack.mapteam.util.FacebookToToken;
 import com.angelhack.mapteam.util.IPtoLocationJson;
 import com.angelhack.mapteam.util.ProfileJson;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.restfb.DefaultFacebookClient;
 import com.restfb.FacebookClient;
 import com.restfb.Parameter;
@@ -32,6 +33,9 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -225,6 +229,72 @@ public class FacebookCallbackController {
 
         return "redirect:http://hsiangyu.com/AH10/index.html?memberCondition="+memberConditionExist.getId()+"&lon="+memberConditionExist.getLon()+"&lat="+memberConditionExist.getLat();
     }
+
+
+    @CrossOrigin(value = "*")
+    @RequestMapping(value = "/queryUserLoc",method = {RequestMethod.POST,RequestMethod.GET} ,produces = "application/json")
+    @ResponseBody
+    public String queryUserLoc(@RequestParam(value = "id")String id,
+                               HttpServletResponse httpResponse){
+       try {
+           MemberCondition memberConditionExist = memberConditionRepository.findOne(id);
+           List<String> ageRange = new ArrayList<String>();
+           List<String> gender = new ArrayList<String>();
+           List<String> locale = new ArrayList<String>();
+           if (memberConditionExist.getAgeRange() == null || "".equals(memberConditionExist.getAgeRange())) {
+               ageRange = new ArrayList<String>();
+               ageRange.add("11");
+               ageRange.add("21");
+               ageRange.add("31");
+               ageRange.add("41");
+               ageRange.add("51");
+               ageRange.add("61");
+           } else {
+               ageRange.add(memberConditionExist.getAgeRange());
+           }
+
+           if (memberConditionExist.getGender() == null || "".equals(memberConditionExist.getGender())) {
+               gender = new ArrayList<String>();
+               gender.add("female");
+               gender.add("male");
+           } else {
+               gender.add(memberConditionExist.getGender());
+           }
+
+           if (memberConditionExist.getLocale() == null || "".equals(memberConditionExist.getLocale())) {
+               locale = new ArrayList<String>();
+               locale.add("zh_TW");
+               locale.add("zh_CN");
+               locale.add("en_US");
+               locale.add("fr_FR");
+               locale.add("it_IT");
+               locale.add("ja_JP");
+               locale.add("ko_KR");
+
+           } else {
+               locale.add(memberConditionExist.getLocale());
+           }
+
+           Double lonMin = memberConditionExist.getLon() - new Double("0.20");
+           Double lonMax = memberConditionExist.getLon() + new Double("0.20");
+           Double latMin = memberConditionExist.getLat() - new Double("0.20");
+           Double latMax = memberConditionExist.getLat() + new Double("0.20");
+
+           List<MemberUser> memberUserList = memberUserRepository.searchByDistance(lonMin, lonMax, latMin, latMax, ageRange, gender, locale);
+           ObjectMapper objectMapper = new ObjectMapper();
+           DateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+           objectMapper.setDateFormat(df);
+           String memberMessagesStr = null;
+           memberMessagesStr = objectMapper.writeValueAsString(memberUserList);
+           return memberMessagesStr;
+       }catch (Exception e){
+           e.printStackTrace();
+           httpResponse.setStatus(500);
+           return "\"status\":\"error\"";
+       }
+
+    }
+
 
 
 }
