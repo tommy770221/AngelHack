@@ -14,7 +14,7 @@ public class FacebookToToken {
          OkHttpClient client = new OkHttpClient();
 
          Request request = new Request.Builder()
-                 .url("https://graph.facebook.com/v2.10/oauth/access_token?client_id=368897760172030%0A&redirect_uri=http%3A%2F%2F10.187.1.18%3A8080%2FAngelHack%2FgetFBCode&client_secret=921a94223f3f0f147196b46ba1a6761e&code="+code)
+                 .url("https://graph.facebook.com/v2.10/oauth/access_token?client_id=368897760172030%0A&redirect_uri=http%3A%2F%2Flocalhost%3A8080%2FAngelHack%2FgetFBCode&client_secret=921a94223f3f0f147196b46ba1a6761e&code="+code)
                  .get()
                  .addHeader("cache-control", "no-cache")
                  .addHeader("postman-token", "b540246f-08b2-1634-bdd8-a708d90bd312")
