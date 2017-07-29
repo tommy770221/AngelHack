@@ -133,8 +133,14 @@ public class MemberUser {
     public void setLat(Double lat) {
         this.lat = lat;
     }
-    
 
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
 
     public Date getUpdateDate() {
         return updateDate;
