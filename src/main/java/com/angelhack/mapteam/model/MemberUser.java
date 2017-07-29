@@ -54,6 +54,10 @@ public class MemberUser {
     @JsonProperty("updateDate")
     private Date updateDate;
 
+    @Transient
+    @JsonProperty
+    private Double distance;
+
     public String getId() {
         return id;
     }
@@ -133,4 +137,13 @@ public class MemberUser {
     public void setUpdateDate(Date updateDate) {
         this.updateDate = updateDate;
     }
+
+    public Double getDistance() {
+        return distance;
+    }
+
+    public void setDistance(Double distance) {
+        this.distance = distance;
+    }
+
 }

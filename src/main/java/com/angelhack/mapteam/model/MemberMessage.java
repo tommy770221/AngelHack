@@ -39,6 +39,10 @@ public class MemberMessage {
     @JsonProperty("lat")
     private Double lat;
 
+    @Transient
+    @JsonProperty
+    private Double distance;
+
     @Column
     @JsonProperty
     private Date createDate;
@@ -110,5 +114,13 @@ public class MemberMessage {
 
     public void setGetRead(Boolean getRead) {
         this.getRead = getRead;
+    }
+
+    public Double getDistance() {
+        return distance;
+    }
+
+    public void setDistance(Double distance) {
+        this.distance = distance;
     }
 }

@@ -4,8 +4,11 @@ package com.angelhack.mapteam.controller;
 import com.angelhack.mapteam.model.Country;
 import com.angelhack.mapteam.model.MemberMessage;
 import com.angelhack.mapteam.model.MemberMessageAll;
+import com.angelhack.mapteam.model.MemberUser;
 import com.angelhack.mapteam.repository.MemberMessageAllRepository;
 import com.angelhack.mapteam.repository.MemberMessageRepository;
+import com.angelhack.mapteam.repository.MemberUserRepository;
+import com.angelhack.mapteam.util.distance.FlatEarthDist;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +31,9 @@ public class MessageController {
     @Autowired
     MemberMessageAllRepository memberMessageAllRepository;
 
+    @Autowired
+    MemberUserRepository memberUserRepository;
+
 
     @CrossOrigin(value = "*")
     @RequestMapping(value = "/getSingleMessages", method = {RequestMethod.POST,RequestMethod.GET},produces = "application/json")
@@ -37,6 +43,11 @@ public class MessageController {
                               @RequestParam(value = "toEmail")String toEmail,
                               HttpServletResponse response) {
         List<MemberMessage> memberMessageList=memberMessageRepository.searchByEmailAndDate(toEmail,fromEmail);
+        MemberUser memberUser=memberUserRepository.searchByEmail(fromEmail);
+        for(MemberMessage memberMessage:memberMessageList){
+            Double dis= FlatEarthDist.distance(memberMessage.getLat(),memberMessage.getLon(),memberUser.getLat(),memberUser.getLon());
+            memberMessage.setDistance(dis);
+        }
         ObjectMapper objectMapper=new ObjectMapper();
         DateFormat df=new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         objectMapper.setDateFormat(df);
@@ -59,6 +70,12 @@ public class MessageController {
                               @RequestParam(value = "fromEmail")String fromEmail,
                               HttpServletResponse response) {
         List<MemberMessageAll> memberMessageList=memberMessageAllRepository.searchByEmail(fromEmail);
+        MemberUser memberUser=memberUserRepository.searchByEmail(fromEmail);
+        for(MemberMessageAll memberMessageAll:memberMessageList){
+            Double dis= FlatEarthDist.distance(memberMessageAll.getLat(),memberMessageAll.getLon(),memberUser.getLat(),memberUser.getLon());
+            memberMessageAll.setDistance(dis);
+        }
+
         ObjectMapper objectMapper=new ObjectMapper();
         DateFormat df=new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         objectMapper.setDateFormat(df);

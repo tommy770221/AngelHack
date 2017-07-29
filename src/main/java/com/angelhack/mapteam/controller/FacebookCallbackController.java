@@ -11,6 +11,7 @@ import com.angelhack.mapteam.specification.MemberUserSpecification;
 import com.angelhack.mapteam.util.FacebookToToken;
 import com.angelhack.mapteam.util.IPtoLocationJson;
 import com.angelhack.mapteam.util.ProfileJson;
+import com.angelhack.mapteam.util.distance.FlatEarthDist;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.restfb.DefaultFacebookClient;
 import com.restfb.FacebookClient;
@@ -227,7 +228,7 @@ public class FacebookCallbackController {
             memberConditionExist.setLat(new Double("25.0418"));
         }
 
-        return "redirect:http://hsiangyu.com/AH10/index.html?memberCondition="+memberConditionExist.getId()+"&lon="+memberConditionExist.getLon()+"&lat="+memberConditionExist.getLat();
+        return "redirect:https://angelhack-449d1.firebaseapp.com/index.html?memberCondition="+memberConditionExist.getId()+"&lon="+memberConditionExist.getLon()+"&lat="+memberConditionExist.getLat();
     }
 
 
@@ -238,6 +239,7 @@ public class FacebookCallbackController {
                                HttpServletResponse httpResponse){
        try {
            MemberCondition memberConditionExist = memberConditionRepository.findOne(id);
+           MemberUser memberUser=memberUserRepository.searchByEmail(memberConditionExist.getEmail());
            List<String> ageRange = new ArrayList<String>();
            List<String> gender = new ArrayList<String>();
            List<String> locale = new ArrayList<String>();
@@ -281,6 +283,11 @@ public class FacebookCallbackController {
            Double latMax = memberConditionExist.getLat() + new Double("0.20");
 
            List<MemberUser> memberUserList = memberUserRepository.searchByDistance(lonMin, lonMax, latMin, latMax, ageRange, gender, locale);
+           for(MemberUser memberUser1:memberUserList){
+              Double dis=FlatEarthDist.distance(memberUser1.getLat(),memberUser1.getLon(),memberUser.getLat(),memberUser.getLon());
+              memberUser1.setDistance(dis);
+           }
+
            ObjectMapper objectMapper = new ObjectMapper();
            DateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
            objectMapper.setDateFormat(df);
