@@ -22,19 +22,19 @@
 			</div>	.
 			<div class="form-group">
 				<label for="name">name</label>
-				<input type="text" class="form-control" name="name">
+				<input type="text" class="form-control" name="name" value="${memberUser.name}">
 			</div>	
 			<div class="form-group">
 				<label for="locale">locale</label>
-				<input type="text" class="form-control" name="locale">
+				<input type="text" class="form-control" name="locale" value=${memberUser.locale}>
 			</div>	
 			<div class="form-group">
 				<label for="email">email</label>
-				<input type="text" class="form-control" name="email">
+				<input type="text" class="form-control" name="email" value=${memberUser.email}>
 			</div>	
 			<div class="form-group">
 				<label for="ageRange">ageRange</label>
-				<input type="text" class="form-control" name="ageRange">
+				<input type="text" class="form-control" name="ageRange" value=${memberUser.ageRange}>
 			</div>
 			<div class="form-group">
 				<button class="btn btn-default" type="submit">submit</button>
