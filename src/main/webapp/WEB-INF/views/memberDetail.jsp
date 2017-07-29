@@ -12,7 +12,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-	<form method="post"  action="${pageContext.request.contextPath}/accessCondition">
+	<form class="col-md-offset-4 col-md-4 col-sm-offset-4 col-sm-4 col-lg-offset-4 col-lg-4" method="post"  action="${pageContext.request.contextPath}/accessCondition">
 		<div class="form-group">
 			<h2>Add MemberUser</h2>
 		</div>
