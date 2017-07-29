@@ -108,6 +108,7 @@ public class MessageController {
             memberMessage.setGetRead(Boolean.FALSE);
             memberMessage.setLon(lon);
             memberMessage.setLat(lat);
+            memberMessageAllRepository.save(memberMessage);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -137,6 +138,7 @@ public class MessageController {
         memberMessage.setGetRead(Boolean.FALSE);
         memberMessage.setLon(lon);
         memberMessage.setLat(lat);
+        memberMessageRepository.save(memberMessage);
 
         } catch (Exception e) {
             e.printStackTrace();

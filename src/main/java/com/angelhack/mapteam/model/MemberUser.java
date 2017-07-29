@@ -54,6 +54,10 @@ public class MemberUser {
     @JsonProperty("updateDate")
     private Date updateDate;
 
+    @Column
+    @JsonProperty
+    private Date createDate;
+
     @Transient
     @JsonProperty
     private Double distance;
@@ -129,6 +133,8 @@ public class MemberUser {
     public void setLat(Double lat) {
         this.lat = lat;
     }
+    
+
 
     public Date getUpdateDate() {
         return updateDate;
