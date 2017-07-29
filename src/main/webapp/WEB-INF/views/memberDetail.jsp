@@ -4,42 +4,69 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <html>
 <head>
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/bootstrap/dist/css/bootstrap.min.css">
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/bootstrap/dist/css/bootstrap-theme.min.css">
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/font-awesome/css/font-awesome.css">
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/bootstrap-social/bootstrap-social.css">
+	<style>
+		.blue-button{
+			background: #25A6E1;
+			filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#25A6E1',endColorstr='#188BC0',GradientType=0);
+			padding:3px 5px;
+			color:#fff;
+			font-family:'Helvetica Neue',sans-serif;
+			font-size:12px;
+			border-radius:2px;
+			-moz-border-radius:2px;
+			-webkit-border-radius:4px;
+			border:1px solid #1A87B9
+		}
+		table {
+			font-family: "Helvetica Neue", Helvetica, sans-serif;
+			width: 50%;
+		}
+		th {
+			background: SteelBlue;
+			color: white;
+		}
+		td,th{
+			border: 1px solid gray;
+			width: 25%;
+			text-align: left;
+			padding: 5px 10px;
+		}
+	</style>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-	<div class="container">
-		<form method="post" modelAttribute="memberUser" action="${pageContext.request.contextPath}/addMember">
-            <div class="form-group">
-				<h2 class='col-sm-12 col-md-offset-2 col-md-8 col-lg-offset-2 col-lg-2'>Add MemberUser</h2>
-			</div>
-			<div class="form-group">
-				<label for="gender">gender</label>
-				<input type="text" class="form-control" name="gender" value="${memberUser.gender}">
-			</div>	.
-			<div class="form-group">
-				<label for="name">name</label>
-				<input type="text" class="form-control" name="name">
-			</div>	
-			<div class="form-group">
-				<label for="locale">locale</label>
-				<input type="text" class="form-control" name="locale">
-			</div>	
-			<div class="form-group">
-				<label for="email">email</label>
-				<input type="text" class="form-control" name="email">
-			</div>	
-			<div class="form-group">
-				<label for="ageRange">ageRange</label>
-				<input type="text" class="form-control" name="ageRange">
-			</div>
-			<div class="form-group">
-				<button class="btn btn-default" type="submit">submit</button>
-			</div>
-		</form>
-	</div>
+<form:form method="post" modelAttribute="memberUser" action="${pageContext.request.contextPath}/accessCondition">
+	<table>
+		<tr>
+			<th colspan="2">Add MemberUser</th>
+		</tr>
+		<tr>
+			<form:hidden path="email" />
+			<td><form:label path="gender">gender:</form:label></td>
+			<td><form:input path="gender"></form:input></td>
+		</tr>
+	<!--	<tr>
+			<td><form:label path="name">name:</form:label></td>
+			<td><form:input path="name"></form:input></td>
+		</tr>-->
+		<tr>
+			<td><form:label path="locale">locale:</form:label></td>
+			<td><form:input path="locale"></form:input></td>
+		</tr>
+	<!--	<tr>
+			<td><form:label path="email">email:</form:label></td>
+			<td><form:input path="email"></form:input></td>
+		</tr>-->
+			<tr>
+			<td><form:label path="ageRange">ageRange:</form:label></td>
+			<td><form:input path="ageRange"></form:input></td>
+		</tr>
+		<tr>
+			<td colspan="2"><input type="submit"
+								   class="blue-button" /></td>
+		</tr>
+	</table>
+</form:form>
+</br>
 </body>
 </html>
