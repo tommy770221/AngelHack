@@ -1,0 +1,10 @@
+.icon-header {
+    height: 50vh;
+    display: flex;
+    justify-content: center;
+    align-items: center
+}
+.center {
+    float: none;
+    margin: 0 auto;
+}

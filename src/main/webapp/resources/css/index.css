@@ -1,0 +1,22 @@
+.icon-header {
+    height: 50vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 0;
+    padding:0;
+}
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center
+}
+.label-size{
+    font-size: 30px;
+}
+.btn-margin-offset{
+    margin-bottom:20px;
+}
+body {
+    background-color:lightyellow;
+}
