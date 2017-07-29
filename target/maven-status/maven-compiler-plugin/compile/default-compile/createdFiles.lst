@@ -1,0 +1,12 @@
+com\angelhack\mapteam\controller\FacebookCallbackController.class
+com\angelhack\mapteam\repository\CountryRepository.class
+com\angelhack\mapteam\api\model\ProfileResponse.class
+com\angelhack\mapteam\model\Country.class
+com\angelhack\mapteam\util\ProfileJson.class
+com\angelhack\mapteam\model\MemberUser.class
+com\angelhack\mapteam\repository\MemberUserRepository.class
+com\angelhack\mapteam\api\model\AccessTokenResponse.class
+com\angelhack\mapteam\service\CountryService.class
+com\angelhack\mapteam\util\FacebookToToken.class
+com\angelhack\mapteam\api\model\AgeRange.class
+com\angelhack\mapteam\controller\CountryController.class
