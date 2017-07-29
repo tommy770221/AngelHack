@@ -30,7 +30,7 @@ public class FacebookCallbackController {
     public String askSignIn(Model model) {
 
          System.out.println("ask signin:");
-        return "redirect:https://www.facebook.com/v2.10/dialog/oauth?client_id=368897760172030&redirect_uri=http://10.187.1.18:8080/AngelHack/getFBCode&scope=public_profile,email,user_friends";
+        return "redirect:https://www.facebook.com/v2.10/dialog/oauth?client_id=368897760172030&redirect_uri=http://localhost:8080/AngelHack/getFBCode&scope=public_profile,email,user_friends";
     }
 
     @RequestMapping(value = "/getFBCode", method = RequestMethod.GET, headers = "Accept=application/json")
@@ -53,7 +53,7 @@ public class FacebookCallbackController {
         //  List<Country> listOfCountries = countryService.getAllCountries();
         model.addAttribute("country", new Country());
        // model.addAttribute("listOfCountries", listOfCountries);
-        return "countryDetails";
+        return "selectorFilter";
     }
 
 
