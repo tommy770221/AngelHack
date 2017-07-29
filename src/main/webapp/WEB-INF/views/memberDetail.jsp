@@ -16,7 +16,7 @@
 		<div class="form-group">
 			<h2>Add MemberUser</h2>
 		</div>
-		<input type="hidden" name="email" />
+		<input type="hidden" name="email" value="${email}" />
 	    <div class="form-group">
 			<label for="gender">gender</label>
 			<select name="gender" class='form-control'>

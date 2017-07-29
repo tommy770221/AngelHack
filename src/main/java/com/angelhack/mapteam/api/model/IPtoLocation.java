@@ -1,9 +1,13 @@
 package com.angelhack.mapteam.api.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.annotation.Generated;
 
 @Generated("com.robohorse.robopojogenerator")
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class IPtoLocation{
 
 	@JsonProperty("zip")
@@ -31,7 +35,7 @@ public class IPtoLocation{
 	private String regionName;
 
 	@JsonProperty("lon")
-	private double lon;
+	private Double lon;
 
 	@JsonProperty("as")
 	private String as;
@@ -43,7 +47,7 @@ public class IPtoLocation{
 	private String region;
 
 	@JsonProperty("lat")
-	private double lat;
+	private Double lat;
 
 	@JsonProperty("status")
 	private String status;
@@ -112,13 +116,7 @@ public class IPtoLocation{
 		return regionName;
 	}
 
-	public void setLon(double lon){
-		this.lon = lon;
-	}
 
-	public double getLon(){
-		return lon;
-	}
 
 	public void setAs(String as){
 		this.as = as;
@@ -144,12 +142,21 @@ public class IPtoLocation{
 		return region;
 	}
 
-	public void setLat(double lat){
-		this.lat = lat;
+
+	public Double getLon() {
+		return lon;
 	}
 
-	public double getLat(){
+	public void setLon(Double lon) {
+		this.lon = lon;
+	}
+
+	public Double getLat() {
 		return lat;
+	}
+
+	public void setLat(Double lat) {
+		this.lat = lat;
 	}
 
 	public void setStatus(String status){

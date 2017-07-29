@@ -37,6 +37,7 @@ import java.net.URLEncoder;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -109,6 +110,7 @@ public class FacebookCallbackController {
 
         MemberUser memberUser1=memberUserRepository.searchByFBID(profileResponse.getId());
         if(memberUser1==null) {
+            memberUser.setCreateDate(new Date());
             memberUserRepository.save(memberUser);
         }else{
             System.out.println("memberUser1 : "+ memberUser1.getName());
@@ -139,6 +141,7 @@ public class FacebookCallbackController {
             MemberUser memberUser=memberUserRepository.searchByEmail(email);
             memberUser.setLon(lon);
             memberUser.setLat(lat);
+            memberUser.setUpdateDate(new Date());
             memberUserRepository.save(memberUser);
         } catch (Exception e) {
             e.printStackTrace();
@@ -175,7 +178,7 @@ public class FacebookCallbackController {
         memberCondition.setGender(gender);
         memberCondition.setLocale(locale);
         memberCondition.setEmail(email);
-        if(iPtoLocation !=null){
+        if(iPtoLocation !=null && iPtoLocation.getLat()!=null && iPtoLocation.getLon()!=null){
             memberCondition.setLon(iPtoLocation.getLon());
             memberCondition.setLat(iPtoLocation.getLat());
             memberUser.setLat(iPtoLocation.getLat());
