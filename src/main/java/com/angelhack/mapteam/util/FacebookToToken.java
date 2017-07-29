@@ -23,7 +23,7 @@ public class FacebookToToken {
          Response response = client.newCall(request).execute();
          String token=response.body().string();
          ObjectMapper objectMapper=new ObjectMapper();
-        AccessTokenResponse accessTokenResponse= objectMapper.readValue(token, AccessTokenResponse.class);
+         AccessTokenResponse accessTokenResponse= objectMapper.readValue(token, AccessTokenResponse.class);
          System.out.println("response"+accessTokenResponse.getAccessToken());
          return accessTokenResponse.getAccessToken();
      }
