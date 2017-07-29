@@ -143,10 +143,10 @@ public class FacebookCallbackController {
         } catch (Exception e) {
             e.printStackTrace();
             httpResponse.setStatus(500);
-            return "\"status\":\"error\"";
+            return "{\"status\":\"error\"}";
         }
 
-        return "\"status\":\"ok\"";
+        return "{\"status\":\"ok\"}";
     }
 
     @CrossOrigin(value = "*")
@@ -297,7 +297,7 @@ public class FacebookCallbackController {
        }catch (Exception e){
            e.printStackTrace();
            httpResponse.setStatus(500);
-           return "\"status\":\"error\"";
+           return "{\"status\":\"error\"}";
        }
 
     }

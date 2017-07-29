@@ -57,7 +57,7 @@ public class MessageController {
         } catch (JsonProcessingException e) {
             e.printStackTrace();
             response.setStatus(500);
-            return "\"status\":\"error\"";
+            return "{\"status\":\"error\"}";
         }
 
         return memberMessagesStr;
@@ -85,7 +85,7 @@ public class MessageController {
         } catch (JsonProcessingException e) {
             e.printStackTrace();
             response.setStatus(500);
-            return "\"status\":\"error\"";
+            return "{\"status\":\"error\"}";
         }
 
         return memberMessagesStr;
@@ -112,10 +112,10 @@ public class MessageController {
         } catch (Exception e) {
             e.printStackTrace();
             response.setStatus(500);
-            return "\"status\":\"error\"";
+            return "{\"status\":\"error\"}";
         }
 
-        return "\"status\":\"ok\"";
+        return "{\"status\":\"ok\"}";
     }
 
     @CrossOrigin(value = "*")
@@ -141,9 +141,9 @@ public class MessageController {
         } catch (Exception e) {
             e.printStackTrace();
             response.setStatus(500);
-            return "\"status\":\"error\"";
+            return "{\"status\":\"error\"}";
         }
 
-        return "\"status\":\"ok\"";
+        return "{\"status\":\"ok\"}";
     }
 }
