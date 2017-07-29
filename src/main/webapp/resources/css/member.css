@@ -1,0 +1,14 @@
+.member {
+	margin-top:50px;
+	
+	display: flex;
+	
+	justify-content: center;
+	
+	align-items: center;
+}
+
+body {
+    background-color:lightyellow;
+    background-image: url("../img/ask_bg.png");
+}

@@ -9,10 +9,11 @@
      <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/bootstrap/dist/css/bootstrap-theme.min.css">
      <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/font-awesome/css/font-awesome.css">
      <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/bootstrap-social/bootstrap-social.css">
+     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member.css">
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-	<form class="col-md-offset-4 col-md-4 col-sm-offset-4 col-sm-4 col-lg-offset-4 col-lg-4" method="post"  action="${pageContext.request.contextPath}/accessCondition">
+	<form class="col-md-offset-4 col-md-4 col-sm-offset-4 col-sm-4 col-lg-offset-4 col-lg-4 member" method="post"  action="${pageContext.request.contextPath}/accessCondition">
 		<div class="form-group">
 			<h2>Add MemberUser</h2>
 		</div>

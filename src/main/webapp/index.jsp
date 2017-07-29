@@ -14,7 +14,7 @@
     <body>
     <div class="container col-xs-12 col-sm-offset-4 col-sm-4 col-md-offset-4 col-md-4 col-lg-offset-4 col-lg-4">
         <div class="panel-header panel-default icon-header">
-            <img src='${pageContext.request.contextPath}/resources/img/logo.png' class='avatar img-responsive img-circle center'/>
+            <img src='${pageContext.request.contextPath}/resources/img/logo.png' class='avatar img-responsive center'/>
         </div>
         <div class="center label-size">userName</div>
         <div class="panel-body panel-default">            
