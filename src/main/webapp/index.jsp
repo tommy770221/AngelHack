@@ -16,7 +16,7 @@
         <div class="panel-header panel-default icon-header">
             <img src='${pageContext.request.contextPath}/resources/img/logo.png' class='avatar img-responsive center'/>
         </div>
-        <div class="center label-size">userName</div>
+        <div class="center label-size">Welcome !</div>
         <div class="panel-body panel-default">            
             <a href="${pageContext.request.contextPath}/askSignIn" class="btn btn-block btn-social btn-facebook btn-margin-offset"><i class="fa fa-facebook" aria-hidden="true"></i>Facebook Login</a>
             <a href="#" class="btn btn-block btn-social btn-google btn-margin-offset"><i class="fa fa-google" aria-hidden="true"></i>google Login</a>
