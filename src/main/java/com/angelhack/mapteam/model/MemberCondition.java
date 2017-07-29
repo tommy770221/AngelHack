@@ -32,6 +32,18 @@ public class MemberCondition {
     @JsonProperty("email")
     private String email;
 
+    @Column
+    @JsonProperty("lon")
+    private Double lon;
+
+    @Column
+    @JsonProperty("lat")
+    private Double lat;
+
+    @Column
+    @JsonProperty("isOnline")
+    private Boolean isOnline;
+
     public String getId() {
         return id;
     }
@@ -71,4 +83,30 @@ public class MemberCondition {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public Double getLon() {
+        return lon;
+    }
+
+    public void setLon(Double lon) {
+        this.lon = lon;
+    }
+
+    public Double getLat() {
+        return lat;
+    }
+
+    public void setLat(Double lat) {
+        this.lat = lat;
+    }
+
+    public Boolean getOnline() {
+        return isOnline;
+    }
+
+    public void setOnline(Boolean online) {
+        isOnline = online;
+    }
+
+
 }

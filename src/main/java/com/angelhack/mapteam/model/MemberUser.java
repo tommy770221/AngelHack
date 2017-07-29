@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name="MEMBERUSER")
@@ -40,6 +41,18 @@ public class MemberUser {
     @Column
     @JsonProperty("fbId")
     private String fbId;
+
+    @Column
+    @JsonProperty("lon")
+    private Double lon;
+
+    @Column
+    @JsonProperty("lat")
+    private Double lat;
+
+    @Column
+    @JsonProperty("updateDate")
+    private Date updateDate;
 
     public String getId() {
         return id;
@@ -95,5 +108,29 @@ public class MemberUser {
 
     public void setFbId(String fbId) {
         this.fbId = fbId;
+    }
+
+    public Double getLon() {
+        return lon;
+    }
+
+    public void setLon(Double lon) {
+        this.lon = lon;
+    }
+
+    public Double getLat() {
+        return lat;
+    }
+
+    public void setLat(Double lat) {
+        this.lat = lat;
+    }
+
+    public Date getUpdateDate() {
+        return updateDate;
+    }
+
+    public void setUpdateDate(Date updateDate) {
+        this.updateDate = updateDate;
     }
 }

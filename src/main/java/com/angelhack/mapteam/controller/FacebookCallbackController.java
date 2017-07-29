@@ -1,6 +1,7 @@
 package com.angelhack.mapteam.controller;
 
 
+import com.angelhack.mapteam.api.model.IPtoLocation;
 import com.angelhack.mapteam.api.model.ProfileResponse;
 import com.angelhack.mapteam.model.MemberCondition;
 import com.angelhack.mapteam.model.MemberUser;
@@ -8,6 +9,7 @@ import com.angelhack.mapteam.repository.MemberConditionRepository;
 import com.angelhack.mapteam.repository.MemberUserRepository;
 import com.angelhack.mapteam.specification.MemberUserSpecification;
 import com.angelhack.mapteam.util.FacebookToToken;
+import com.angelhack.mapteam.util.IPtoLocationJson;
 import com.angelhack.mapteam.util.ProfileJson;
 import com.restfb.DefaultFacebookClient;
 import com.restfb.FacebookClient;
@@ -22,11 +24,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
@@ -48,13 +49,15 @@ public class FacebookCallbackController {
     @Autowired
     MemberConditionRepository memberConditionRepository;
 
+    @CrossOrigin(value = "*")
     @RequestMapping(value = "/askSignIn", method = RequestMethod.GET, headers = "Accept=application/json")
     public String askSignIn(Model model) {
 
          System.out.println("ask signin:");
-        return "redirect:https://www.facebook.com/v2.10/dialog/oauth?client_id=368897760172030&redirect_uri=http://192.168.1.116:8080/AngelHack/getFBCode&scope=public_profile,email,user_friends";
+        return "redirect:https://www.facebook.com/v2.10/dialog/oauth?client_id=368897760172030&redirect_uri=http://tommy770221.com:8080/AngelHack/getFBCode&scope=public_profile,email,user_friends";
     }
 
+    @CrossOrigin(value = "*")
     @RequestMapping(value = "/getFBCode", method = RequestMethod.GET, headers = "Accept=application/json")
     public String getFacebookCode(Model model, @RequestParam(value = "code")String code) throws IOException {
 
@@ -110,6 +113,7 @@ public class FacebookCallbackController {
     }
 
 
+    @CrossOrigin(value = "*")
     @RequestMapping(value = "/addMember", method = RequestMethod.POST)
     public String addMember(@ModelAttribute("memberUser") MemberUser memberUser) {
         if(memberUser.getId()!=null || !"".equals(memberUser.getId())) {
@@ -119,6 +123,28 @@ public class FacebookCallbackController {
         return "redirect:/getAllCountries";
     }
 
+    @CrossOrigin(value = "*")
+    @RequestMapping(value = "/updateLoc", method = {RequestMethod.POST,RequestMethod.GET},produces = "application/json")
+    @ResponseBody
+    public String updateLoc(@RequestParam(value = "email")String email,
+                            @RequestParam(value = "lon")Double lon,
+                            @RequestParam(value = "lat")Double lat,
+                            HttpServletResponse httpResponse) {
+        try {
+            MemberUser memberUser=memberUserRepository.searchByEmail(email);
+            memberUser.setLon(lon);
+            memberUser.setLat(lat);
+            memberUserRepository.save(memberUser);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httpResponse.setStatus(500);
+            return "\"status\":\"error\"";
+        }
+
+        return "\"status\":\"ok\"";
+    }
+
+    @CrossOrigin(value = "*")
     @RequestMapping(value = "/accessCondition",method = {RequestMethod.POST,RequestMethod.GET})
     public String searchMember(
                                @RequestParam(value = "email",required = false)String email,
@@ -126,18 +152,40 @@ public class FacebookCallbackController {
                                @RequestParam(value = "locale",required = false)String locale,
                                @RequestParam(value = "ageRange",required = false)String ageRange,
                                @RequestParam(value = "page",required = false)Integer page,
-                               @RequestParam(value = "size",required = false)Integer size
+                               @RequestParam(value = "size",required = false)Integer size,
+                               HttpServletRequest request
                          ) {
         System.out.println("search member");
+        System.out.println(request.getRemoteAddr());
+        IPtoLocationJson iPtoLocationJson=new IPtoLocationJson();
+        IPtoLocation iPtoLocation=null;
+        try {
+            iPtoLocation=iPtoLocationJson.transIpTolocation(request.getRemoteAddr());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         MemberCondition memberCondition=new MemberCondition();
+        MemberUser memberUser=memberUserRepository.searchByEmail(email);
         memberCondition.setAgeRange(ageRange);
         memberCondition.setGender(gender);
         memberCondition.setLocale(locale);
         memberCondition.setEmail(email);
+        if(iPtoLocation !=null){
+            memberCondition.setLon(iPtoLocation.getLon());
+            memberCondition.setLat(iPtoLocation.getLat());
+            memberUser.setLat(iPtoLocation.getLat());
+            memberUser.setLon(iPtoLocation.getLon());
+            memberUserRepository.save(memberUser);
+        }
+
         MemberCondition memberConditionExist=memberConditionRepository.searchByEmail(email);
         if(memberConditionExist==null){
             memberConditionExist=memberConditionRepository.save(memberCondition);
         }else{
+            if(iPtoLocation !=null){
+                memberCondition.setLon(iPtoLocation.getLon());
+                memberCondition.setLat(iPtoLocation.getLat());
+            }
             memberConditionExist.setAgeRange(ageRange);
             memberConditionExist.setGender(gender);
             memberConditionExist.setLocale(locale);
@@ -166,7 +214,16 @@ public class FacebookCallbackController {
 //            System.out.println(memberUser1.getEmail());
 //        }
 
-        return "redirect:http://hsiangyu.com/AH10/index.html?memberCondition="+memberConditionExist.getId();
+        //if null templorlly set some value
+        if(memberConditionExist.getLon()==null){
+            memberConditionExist.setLon(new Double("121.4966"));
+        }
+
+        if(memberConditionExist.getLat()==null){
+            memberConditionExist.setLat(new Double("25.0418"));
+        }
+
+        return "redirect:http://hsiangyu.com/AH10/index.html?memberCondition="+memberConditionExist.getId()+"&lon="+memberConditionExist.getLon()+"&lat="+memberConditionExist.getLat();
     }
 
 

@@ -13,4 +13,8 @@ public interface MemberUserRepository extends CrudRepository<MemberUser,String>,
         @Query("SELECT usr FROM MemberUser usr  WHERE usr.fbId =:fbId")
         public MemberUser searchByFBID(@Param(value ="fbId" ) String fbId);
 
+
+        @Query("SELECT usr FROM MemberUser usr  WHERE usr.email =:email")
+        public MemberUser searchByEmail(@Param(value ="email" ) String email);
+
 }
