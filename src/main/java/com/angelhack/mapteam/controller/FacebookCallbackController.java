@@ -131,7 +131,7 @@ public class FacebookCallbackController {
     }
 
     @CrossOrigin(value = "*")
-    @RequestMapping(value = "/updateLoc", method = {RequestMethod.POST,RequestMethod.GET},produces = "application/json")
+    @RequestMapping(value = "/updateLoc", method = {RequestMethod.POST,RequestMethod.GET},produces = "application/json; charset=utf-8")
     @ResponseBody
     public String updateLoc(@RequestParam(value = "email")String email,
                             @RequestParam(value = "lon")Double lon,
@@ -236,7 +236,8 @@ public class FacebookCallbackController {
 
 
     @CrossOrigin(value = "*")
-    @RequestMapping(value = "/queryUserLoc",method = {RequestMethod.POST,RequestMethod.GET} ,produces = "application/json")
+    @RequestMapping(value = "/queryUserLoc",method = {RequestMethod.POST,RequestMethod.GET} ,
+                    produces = "application/json; charset=utf-8")
     @ResponseBody
     public String queryUserLoc(@RequestParam(value = "id")String id,
                                HttpServletResponse httpResponse){

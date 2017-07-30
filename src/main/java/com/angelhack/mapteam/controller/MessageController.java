@@ -36,7 +36,7 @@ public class MessageController {
 
 
     @CrossOrigin(value = "*")
-    @RequestMapping(value = "/getSingleMessages", method = {RequestMethod.POST,RequestMethod.GET},produces = "application/json")
+    @RequestMapping(value = "/getSingleMessages", method = {RequestMethod.POST,RequestMethod.GET},produces = "application/json; charset=utf-8")
     @ResponseBody
     public String getMessages(Model model,
                               @RequestParam(value = "fromEmail")String fromEmail,
@@ -64,7 +64,7 @@ public class MessageController {
     }
 
     @CrossOrigin(value = "*")
-    @RequestMapping(value = "/getAllMessages", method = {RequestMethod.POST,RequestMethod.GET},produces = "application/json")
+    @RequestMapping(value = "/getAllMessages", method = {RequestMethod.POST,RequestMethod.GET},produces = "application/json; charset=utf-8")
     @ResponseBody
     public String getAllMessages(Model model,
                               @RequestParam(value = "fromEmail")String fromEmail,
@@ -120,7 +120,7 @@ public class MessageController {
     }
 
     @CrossOrigin(value = "*")
-    @RequestMapping(value = "/addSingleMessages", method = {RequestMethod.POST,RequestMethod.GET},produces = "application/json")
+    @RequestMapping(value = "/addSingleMessages", method = {RequestMethod.POST,RequestMethod.GET},produces = "application/json; charset=utf-8")
     @ResponseBody
     public String addMessages(Model model,
                               @RequestParam(value = "fromEmail")String fromEmail,
